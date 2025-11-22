@@ -61,3 +61,19 @@ map('t', '<A-v>', [[<C-\><C-n>"+pa]], opts)
 -- https://github.com/neovim/neovim/issues/11804#issuecomment-1113927971
 map('n', 'x', '"_x')
 -- ak-code end
+--
+-- Lua (init.lua)
+vim.api.nvim_set_keymap('n', '<leader><leader>d', ":call DiffTheLastTwo()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>D', ":windo diffoff<CR>", { noremap = true, silent = true })
+
+vim.cmd [[
+function! DiffTheLastTwo()
+    let win_count = winnr('$')
+
+    if win_count < 2
+        silent vsplit #
+    endif
+
+    windo diffthis
+endfunction
+]]
